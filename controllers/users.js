@@ -7,10 +7,14 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.getUserById = (req, res) => {
-  User.findById(req.params.userId)
-    .then((user) => res.send(user))
-    .catch(() => res.status(404)
-      .send({ message: 'Пользователь по указанному _id не найден' }));
+  if (req.params.userId.length === 24) {
+    User.findById(req.params.userId)
+      .then((user) => res.send(user))
+      .catch(() => res.status(404)
+        .send({ message: 'Пользователь по указанному _id не найден' }));
+  } else {
+    res.status(400).send({ message: 'Передан некорректный _id' });
+  }
 };
 
 module.exports.createUser = (req, res) => {
