@@ -14,7 +14,7 @@ mongoose.connect(BASE_PATH, {
 
 app.use((req, res, next) => {
   req.user = {
-    _id: '64e528cab1aa455a6a305695',
+    _id: '64e753405d0e6ba22294d223',
   };
 
   next();
