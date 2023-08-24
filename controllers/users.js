@@ -21,12 +21,20 @@ module.exports.getUserById = (req, res) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Передан некорректный _id' });
       } else {
-        res
-          .status(404)
-          .send({ message: 'Пользователь по указанному _id не найден' });
+        res.status(500).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
+// .catch((err) => {
+//   if (err.name === 'CastError') {
+//     res.status(400).send({ message: 'Передан некорректный _id' });
+//   } else {
+//     res
+//       .status(404)
+//       .send({ message: 'Пользователь по указанному _id не найден' });
+//   }
+// });
+// };
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
@@ -58,15 +66,28 @@ module.exports.editUserData = (req, res) => {
         if (err.name === 'ValidationError') {
           res.status(400).send({ message: err.message });
         } else {
-          res
-            .status(404)
-            .send({ message: 'Пользователь по указанному _id не найден' });
+          res.status(500).send({ message: 'На сервере произошла ошибка' });
         }
       });
   } else {
-    res.status(500).send({ message: 'На сервере произошла ошибка' });
+    res
+      .status(404)
+      .send({ message: 'Пользователь по указанному _id не найден' });
   }
 };
+// .catch((err) => {
+//   if (err.name === 'ValidationError') {
+//     res.status(400).send({ message: err.message });
+//   } else {
+//     res
+//       .status(404)
+//       .send({ message: 'Пользователь по указанному _id не найден' });
+//   }
+// });
+// } else {
+// res.status(500).send({ message: 'На сервере произошла ошибка' });
+// }
+// };
 
 module.exports.editUserAvatar = (req, res) => {
   const { avatar } = req.body;
@@ -84,12 +105,26 @@ module.exports.editUserAvatar = (req, res) => {
         if (err.name === 'ValidationError') {
           res.status(400).send({ message: err.message });
         } else {
-          res
-            .status(404)
-            .send({ message: 'Пользователь по указанному _id не найден' });
+          res.status(500).send({ message: 'На сервере произошла ошибка' });
         }
       });
   } else {
-    res.status(500).send({ message: 'На сервере произошла ошибка' });
+    res
+      .status(404)
+      .send({ message: 'Пользователь по указанному _id не найден' });
   }
 };
+
+// .catch((err) => {
+//   if (err.name === 'ValidationError') {
+//     res.status(400).send({ message: err.message });
+//   } else {
+//     res
+//       .status(404)
+//       .send({ message: 'Пользователь по указанному _id не найден' });
+//   }
+// });
+// } else {
+// res.status(500).send({ message: 'На сервере произошла ошибка' });
+// }
+// };

@@ -21,12 +21,17 @@ module.exports.deleteCard = (req, res) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Передан некорректный _id' });
       } else {
-        res
-          .status(404)
-          .send({ message: 'Карточка с указанным _id не найдена' });
+        res.status(500).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
+// } else {
+//   res
+//     .status(404)
+//     .send({ message: 'Карточка с указанным _id не найдена' });
+// }
+// });
+// };
 
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
@@ -61,12 +66,18 @@ module.exports.likeCard = (req, res) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Передан некорректный _id' });
       } else {
-        res
-          .status(404)
-          .send({ message: 'Карточка с указанным _id не найдена' });
+        res.status(500).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
+
+// } else {
+//   res
+//     .status(404)
+//     .send({ message: 'Карточка с указанным _id не найдена' });
+// }
+// });
+// };
 
 module.exports.dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
@@ -87,9 +98,15 @@ module.exports.dislikeCard = (req, res) => {
       if (err.name === 'CastError') {
         res.status(400).send({ message: 'Передан некорректный _id' });
       } else {
-        res
-          .status(404)
-          .send({ message: 'Карточка с указанным _id не найдена' });
+        res.status(500).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
+
+// } else {
+//   res
+//     .status(404)
+//     .send({ message: 'Карточка с указанным _id не найдена' });
+// }
+// });
+// };
