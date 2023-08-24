@@ -7,11 +7,20 @@ module.exports.getCards = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
-    .then((card) => res.send(card))
-    .catch(() => {
-      res.status(404).send({ message: 'Карточка с указанным _id не найдена' });
-    });
+  if (req.params.cardId.length === 24) {
+    Card.findByIdAndRemove(req.params.cardId)
+      .then((card) => {
+        if (card) {
+          res.send(card);
+        } else {
+          res.status(404).send({ message: 'Карточка с указанным _id не найдена' });
+        }
+      })
+      .catch(() => res.status(404)
+        .send({ message: 'Карточка с указанным _id не найдена' }));
+  } else {
+    res.status(400).send({ message: 'Передан некорректный _id' });
+  }
 };
 
 module.exports.createCard = (req, res) => {
