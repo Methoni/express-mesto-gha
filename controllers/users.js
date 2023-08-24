@@ -7,21 +7,31 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.getUserById = (req, res) => {
-  if (req.params.userId.length === 24) {
-    User.findById(req.params.userId)
-      .then((user) => {
-        if (user) {
-          res.send(user);
-        } else {
-          res.status(404).send({ message: 'Пользователь по указанному _id не найден' });
-        }
-      })
-      .catch(() => res.status(404)
-        .send({ message: 'Пользователь по указанному _id не найден' }));
-  } else {
-    res.status(400).send({ message: 'Передан некорректный _id' });
-  }
+  // if (req.params.userId.length === 24) {
+  User.findById(req.params.userId)
+    .then((user) => {
+      if (user) {
+        res.send(user);
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Пользователь по указанному _id не найден' });
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Передан некорректный _id' });
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Пользователь по указанному _id не найден' });
+      }
+    });
 };
+// } else {
+// res.status(400).send({ message: 'Передан некорректный _id' });
+// }
+// };
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;
