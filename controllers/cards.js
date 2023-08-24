@@ -50,13 +50,22 @@ module.exports.likeCard = (req, res) => {
 };
 
 module.exports.dislikeCard = (req, res) => {
-  Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
-    { new: true },
-  )
-    .then((card) => res.send(card))
-    .catch(() => {
-      res.status(404).send({ message: 'Передан несуществующий _id карточки' });
-    });
+  if (req.params.cardId.length === 24) {
+    Card.findByIdAndUpdate(
+      req.params.cardId,
+      { $pull: { likes: req.user._id } },
+      { new: true },
+    )
+      .then((card) => {
+        if (card) {
+          res.send(card);
+        } else {
+          res.status(404).send({ message: 'Передан несуществующий _id карточки' });
+        }
+      })
+      .catch(() => res.status(404)
+        .send({ message: 'Передан несуществующий _id карточки' }));
+  } else {
+    res.status(400).send({ message: 'Передан некорректный _id' });
+  }
 };
