@@ -25,13 +25,6 @@ module.exports.deleteCard = (req, res) => {
       }
     });
 };
-// } else {
-//   res
-//     .status(404)
-//     .send({ message: 'Карточка с указанным _id не найдена' });
-// }
-// });
-// };
 
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
@@ -71,14 +64,6 @@ module.exports.likeCard = (req, res) => {
     });
 };
 
-// } else {
-//   res
-//     .status(404)
-//     .send({ message: 'Карточка с указанным _id не найдена' });
-// }
-// });
-// };
-
 module.exports.dislikeCard = (req, res) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
@@ -102,11 +87,3 @@ module.exports.dislikeCard = (req, res) => {
       }
     });
 };
-
-// } else {
-//   res
-//     .status(404)
-//     .send({ message: 'Карточка с указанным _id не найдена' });
-// }
-// });
-// };
