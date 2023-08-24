@@ -7,7 +7,6 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.getUserById = (req, res) => {
-  // if (req.params.userId.length === 24) {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
@@ -28,10 +27,6 @@ module.exports.getUserById = (req, res) => {
       }
     });
 };
-// } else {
-// res.status(400).send({ message: 'Передан некорректный _id' });
-// }
-// };
 
 module.exports.createUser = (req, res) => {
   const { name, about, avatar } = req.body;

@@ -7,20 +7,32 @@ module.exports.getCards = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  if (req.params.cardId.length === 24) {
-    Card.findByIdAndRemove(req.params.cardId)
-      .then((card) => {
-        if (card) {
-          res.send(card);
-        } else {
-          res.status(404).send({ message: 'Карточка с указанным _id не найдена' });
-        }
-      })
-      .catch(() => res.status(404)
-        .send({ message: 'Карточка с указанным _id не найдена' }));
-  } else {
-    res.status(400).send({ message: 'Передан некорректный _id' });
-  }
+  // if (req.params.cardId.length === 24) {
+  Card.findByIdAndRemove(req.params.cardId)
+    .then((card) => {
+      if (card) {
+        res.send(card);
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Передан некорректный _id' });
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    });
+
+  //     res.status(404)
+  //       .send({ message: 'Карточка с указанным _id не найдена' }));
+  // } else {
+  //   res.status(400).send({ message: 'Передан некорректный _id' });
+  // }
 };
 
 module.exports.createCard = (req, res) => {
@@ -38,43 +50,80 @@ module.exports.createCard = (req, res) => {
 };
 
 module.exports.likeCard = (req, res) => {
-  if (req.params.cardId.length === 24) {
-    Card.findByIdAndUpdate(
-      req.params.cardId,
-      { $addToSet: { likes: req.user._id } },
-      { new: true },
-    )
-      .then((card) => {
-        if (card) {
-          res.send(card);
-        } else {
-          res.status(404).send({ message: 'Передан несуществующий _id карточки' });
-        }
-      })
-      .catch(() => res.status(404)
-        .send({ message: 'Передан несуществующий _id карточки' }));
-  } else {
-    res.status(400).send({ message: 'Передан некорректный _id' });
-  }
+  // if (req.params.cardId.length === 24) {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
+  )
+    .then((card) => {
+      if (card) {
+        res.send(card);
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Передан некорректный _id' });
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    });
+  //     .catch(() =>
+  //       res
+  //         .status(404)
+  //         .send({ message: 'Передан несуществующий _id карточки' }),
+  //     );
+  // } else {
+  //   res.status(400).send({ message: 'Передан некорректный _id' });
+  // }
 };
 
 module.exports.dislikeCard = (req, res) => {
-  if (req.params.cardId.length === 24) {
-    Card.findByIdAndUpdate(
-      req.params.cardId,
-      { $pull: { likes: req.user._id } },
-      { new: true },
-    )
-      .then((card) => {
-        if (card) {
-          res.send(card);
-        } else {
-          res.status(404).send({ message: 'Передан несуществующий _id карточки' });
-        }
-      })
-      .catch(() => res.status(404)
-        .send({ message: 'Передан несуществующий _id карточки' }));
-  } else {
-    res.status(400).send({ message: 'Передан некорректный _id' });
-  }
+  // if (req.params.cardId.length === 24) {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .then((card) => {
+      if (card) {
+        res.send(card);
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        res.status(400).send({ message: 'Передан некорректный _id' });
+      } else {
+        res
+          .status(404)
+          .send({ message: 'Карточка с указанным _id не найдена' });
+      }
+    });
+  //     .then((card) => {
+  //       if (card) {
+  //         res.send(card);
+  //       } else {
+  //         res
+  //           .status(404)
+  //           .send({ message: 'Передан несуществующий _id карточки' });
+  //       }
+  //     })
+  //     .catch(() =>
+  //       res
+  //         .status(404)
+  //         .send({ message: 'Передан несуществующий _id карточки' }),
+  //     );
+  // } else {
+  //   res.status(400).send({ message: 'Передан некорректный _id' });
+  // }
 };
