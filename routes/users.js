@@ -4,14 +4,12 @@ const { celebrate, Joi } = require('celebrate');
 const {
   getUsers,
   getUserById,
-  // createUser,
   editUserData,
   editUserAvatar,
   getMyUser,
 } = require('../controllers/users');
 
 router.get('/', getUsers);
-// router.get('/:userId', getUserById);
 
 router.get(
   '/:userId',
@@ -23,9 +21,6 @@ router.get(
   getUserById,
 );
 
-// router.post('/', createUser);
-// router.patch('/me', editUserData);
-
 router.patch(
   '/me',
   celebrate({
@@ -36,8 +31,6 @@ router.patch(
   }),
   editUserData,
 );
-
-// router.patch('/me/avatar', editUserAvatar);
 
 router.patch(
   '/me/avatar',

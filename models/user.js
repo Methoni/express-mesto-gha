@@ -8,14 +8,12 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       default: 'Жак-Ив Кусто',
-      // required: [true, 'Необходимо заполнить поле'],
       minlength: [2, 'Минимальное количество символов - 2'],
       maxlength: [30, 'Максимальное количество символов - 30'],
     },
     about: {
       type: String,
       default: 'Исследователь',
-      // required: [true, 'Необходимо заполнить поле'],
       minlength: [2, 'Минимальное количество символов - 2'],
       maxlength: [30, 'Максимальное количество символов - 30'],
     },
@@ -25,7 +23,6 @@ const userSchema = new mongoose.Schema(
       default:
         'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
       validate: {
-        // validator: (v) => validator.isURL(v),
         validator: (v) => /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(
           v,
         ),
@@ -55,17 +52,15 @@ userSchema.statics.findUserByCredentials = function findUser(email, password) {
     .select('+password')
     .then((user) => {
       if (!user) {
-        // return Promise.reject(new Error('Неправильные почта или пароль'));
         throw new UnauthorizedError('Неправильные почта или пароль');
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          // return Promise.reject(new Error('Неправильные почта или пароль'));
           throw new UnauthorizedError('Неправильные почта или пароль');
         }
 
-        return user; // теперь user доступен
+        return user;
       });
     });
 };

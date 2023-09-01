@@ -11,8 +11,6 @@ const {
 
 router.get('/', getCards);
 
-// router.delete('/:cardId', deleteCard);
-
 router.delete(
   '/:cardId',
   celebrate({
@@ -22,8 +20,6 @@ router.delete(
   }),
   deleteCard,
 );
-
-// router.post('/', createCard);
 
 router.post(
   '/',
@@ -40,8 +36,6 @@ router.post(
   createCard,
 );
 
-// router.put('/:cardId/likes', likeCard);
-
 router.put(
   '/:cardId/likes',
   celebrate({
@@ -51,8 +45,6 @@ router.put(
   }),
   likeCard,
 );
-
-// router.delete('/:cardId/likes', dislikeCard);
 
 router.delete(
   '/:cardId/likes',
