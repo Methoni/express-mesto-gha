@@ -11,55 +11,55 @@ module.exports.getUsers = (req, res, next) => {
     .catch(next);
 };
 
-// module.exports.getUserById = (req, res, next) => {
-//   User.findById(req.params.userId)
-//     .then((user) => {
-//       if (user) {
-//         res.status(200).send(user);
-//       } else {
-//         // next(
-//         //   new NotFoundError(
-//         //     ,
-//         //   ),`Пользователь по указанному _id: ${req.params.userId} не найден`
-//         // );
-//         throw new NotFoundError(
-//           `Пользователь по указанному _id: ${req.params.userId} не найден`,
-//         );
-//       }
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         // next(
-//         //   new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
-//         // );
-//         throw new BadRequestError(
-//           `Передан некорректный _id: ${req.params.userId}`,
-//         );
-//       } else {
-//         next(err);
-//       }
-//     });
-// };
-
-module.exports.getUserById = (req, res) => {
+module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
-        res.send(user);
+        res.status(200).send(user);
       } else {
-        res
-          .status(404)
-          .send({ message: 'Пользователь по указанному _id не найден' });
+        // next(
+        //   new NotFoundError(
+        //     ,
+        //   ),`Пользователь по указанному _id: ${req.params.userId} не найден`
+        // );
+        throw new NotFoundError(
+          `Пользователь по указанному _id: ${req.params.userId} не найден`,
+        );
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(400).send({ message: 'Передан некорректный _id' });
+        // next(
+        //   new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
+        // );
+        throw new BadRequestError(
+          `Передан некорректный _id: ${req.params.userId}`,
+        );
       } else {
-        res.status(500).send({ message: 'На сервере произошла ошибка' });
+        next(err);
       }
     });
 };
+
+// module.exports.getUserById = (req, res) => {
+//   User.findById(req.params.userId)
+//     .then((user) => {
+//       if (user) {
+//         res.send(user);
+//       } else {
+//         res
+//           .status(404)
+//           .send({ message: 'Пользователь по указанному _id не найден' });
+//       }
+//     })
+//     .catch((err) => {
+//       if (err.name === 'CastError') {
+//         res.status(400).send({ message: 'Передан некорректный _id' });
+//       } else {
+//         res.status(500).send({ message: 'На сервере произошла ошибка' });
+//       }
+//     });
+// };
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -174,7 +174,6 @@ module.exports.login = (req, res, next) => {
 
 module.exports.getMyUser = (req, res, next) => {
   User.findById(req.user._id)
-    // .then((user) => res.send(user))
     .then((user) => res.status(200).send(user))
     .catch(next);
 };
