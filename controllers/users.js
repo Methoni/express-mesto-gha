@@ -11,28 +11,52 @@ module.exports.getUsers = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.getUserById = (req, res, next) => {
+// module.exports.getUserById = (req, res, next) => {
+//   User.findById(req.params.userId)
+//     .then((user) => {
+//       if (user) {
+//         res.status(200).send(user);
+//       } else {
+//         // next(
+//         //   new NotFoundError(
+//         //     ,
+//         //   ),`Пользователь по указанному _id: ${req.params.userId} не найден`
+//         // );
+//         throw new NotFoundError(
+//           `Пользователь по указанному _id: ${req.params.userId} не найден`,
+//         );
+//       }
+//     })
+//     .catch((err) => {
+//       if (err.name === 'CastError') {
+//         // next(
+//         //   new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
+//         // );
+//         throw new BadRequestError(
+//           `Передан некорректный _id: ${req.params.userId}`,
+//         );
+//       } else {
+//         next(err);
+//       }
+//     });
+// };
+
+module.exports.getUserById = (req, res) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (user) {
-        res.status(200).send(user);
+        res.send(user);
       } else {
-        // next(
-        //   new NotFoundError(
-        //     ,
-        //   ),`Пользователь по указанному _id: ${req.params.userId} не найден`
-        // );
-        throw new NotFoundError(`Пользователь по указанному _id: ${req.params.userId} не найден`);
+        res
+          .status(404)
+          .send({ message: 'Пользователь по указанному _id не найден' });
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        // next(
-        //   new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
-        // );
-        throw new BadRequestError(`Передан некорректный _id: ${req.params.userId}`);
+        res.status(400).send({ message: 'Передан некорректный _id' });
       } else {
-        next(err);
+        res.status(500).send({ message: 'На сервере произошла ошибка' });
       }
     });
 };
