@@ -17,18 +17,20 @@ module.exports.getUserById = (req, res, next) => {
       if (user) {
         res.status(200).send(user);
       } else {
-        next(
-          new NotFoundError(
-            `Пользователь по указанному _id: ${req.params.userId} не найден`,
-          ),
-        );
+        // next(
+        //   new NotFoundError(
+        //     ,
+        //   ),`Пользователь по указанному _id: ${req.params.userId} не найден`
+        // );
+        throw new NotFoundError(`Пользователь по указанному _id: ${req.params.userId} не найден`);
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(
-          new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
-        );
+        // next(
+        //   new BadRequestError(`Передан некорректный _id: ${req.params.userId}`),
+        // );
+        throw new BadRequestError(`Передан некорректный _id: ${req.params.userId}`);
       } else {
         next(err);
       }
