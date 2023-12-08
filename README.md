@@ -1,21 +1,13 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
-
-
-## Директории
-
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
-  
-Остальные директории вспомогательные, создаются при необходимости разработчиком
-
+[![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
+# Проект Mesto (backend)
+## Описание проекта
+Backend для проекта Mesto (https://github.com/methoni/react-mesto-auth)
+## Используемые технологии
+* Node.js
+* база данных Mongo
+* централизованная обработка ошибок
+* валидация данных
 ## Запуск проекта
-
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
-
-## Запуск проекта
-
-Ссылка на репозиторий: https://github.com/Methoni/express-mesto-gha
 
